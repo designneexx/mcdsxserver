@@ -15,13 +15,14 @@ app.listen(process.env.PORT || 3007, (data) => {
 app.get('/', (req, res) => {
   const java = new JavaCaller({
     jar: 'minecraft_server.1.16.1.jar',
+    javaType: 'jdk'
   });
 
-  java.run(['-Xmx1024M', '-Xms1024M', 'nogui']).then((data) => {
+  java.run(['-Xmx1024M', '-Xms1024M', 'nogui'], { detached: true }).then((data) => {
     console.log('success', data)
     res.send(`SUCCESS 123hello, ${ip.address()} ${JSON.stringify(data)}`)
   }).catch(err => {
-    res.send(`ERROR 123hello, ${ip.address()} ${JSON.stringify(err)}`)
+    res.send(`ERROR 123hello, ${ip.address()} ${err}`)
   })
 })
 
