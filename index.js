@@ -2,37 +2,26 @@ const express = require('express')
 const { exec } = require('child_process')
 const path = require('path')
 const ip = require('ip')
+const {JavaCaller} = require('java-caller');
 
 const app = express()
-const serverAddress = path.join(__dirname, 'minecraft_server.1.16.1.jar')
+const minecraftServerJar = path.join(__dirname, 'minecraft_server.1.16.1.jar')
+
+const java = new JavaCaller({
+  jar: 'minecraft_server.1.16.1.jar',
+});
+
 
 app.listen(process.env.PORT || 3007, (port) => {
   console.log(`Example app listening on port ${port}`)
+
+  java.run(['-Xmx1024M', '-Xms1024M', 'nogui']).then((data) => {
+    console.log('success', data)
+  }).catch(err => console.log('err'))
 })
 
 app.get('/', (req, res) => {
-  const child = exec(
-    `java -Xmx1024M -Xms1024M -jar ${serverAddress} nogui`,
-    (error, stdout, stderr) => {
-      console.log('load.')
-
-      if (error) {
-        return res.send(`hello world, ${ip.address()} ${error}`)
-      }
-
-      if (stderr) {
-        return res.send(`hello world, ${ip.address()} ${stderr}`)
-      }
-
-      if (stdout) {
-        return res.send(`hello world, ${ip.address()} ${stdout}`)
-      }
-
-      res.send(`hello world, ${ip.address()} ${stdout}`)
-    }
-  )
-
-  console.log(child)
+  res.send(`hello, ${ip.address()}`)
 })
 
 module.exports = app
