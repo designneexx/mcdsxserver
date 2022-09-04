@@ -7,16 +7,16 @@ const {JavaCaller} = require('java-caller');
 const app = express()
 const minecraftServerJar = path.join(__dirname, 'minecraft_server.1.16.1.jar')
 
-const java = new JavaCaller({
-  jar: minecraftServerJar,
-});
-
 
 app.listen(process.env.PORT || 3007, (data) => {
   console.log(`Example app listening on port ${data}`)
 })
 
 app.get('/', (req, res) => {
+  const java = new JavaCaller({
+    jar: 'minecraft_server.1.16.1.jar',
+  });
+
   java.run(['-Xmx1024M', '-Xms1024M', 'nogui']).then((data) => {
     console.log('success', data)
     res.send(`SUCCESS 123hello, ${ip.address()} ${JSON.stringify(data)}`)
