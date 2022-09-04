@@ -8,7 +8,7 @@ const app = express()
 const minecraftServerJar = path.join(__dirname, 'minecraft_server.1.16.1.jar')
 
 const java = new JavaCaller({
-  jar: './minecraft_server.1.16.1.jar',
+  jar: minecraftServerJar,
 });
 
 
