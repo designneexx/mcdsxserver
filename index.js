@@ -14,16 +14,14 @@ const java = new JavaCaller({
 
 app.listen(process.env.PORT || 3007, (port) => {
   console.log(`Example app listening on port ${port}`)
+
+  java.run(['-Xmx1024M', '-Xms1024M', 'nogui']).then((data) => {
+    console.log('success', data)
+  }).catch(err => console.log('err'))
 })
 
 app.get('/', (req, res) => {
-  java.run(['-Xmx1024M', '-Xms1024M', 'nogui']).then((data) => {
-    res.send(`hello, ${ip.address()} ${data}`)
-
-  }).catch(err => {
-    res.send(`error hello, ${ip.address()} ${data}`)
-
-  })
+  res.send(`hello, ${ip.address()}`)
 })
 
 module.exports = app
