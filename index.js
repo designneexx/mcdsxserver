@@ -1,11 +1,11 @@
 const express = require('express')
-const path = require('path')
 const ip = require('ip')
 const {JavaCaller} = require('java-caller');
 
 const app = express()
 
 const java = new JavaCaller({
+  rootPath: __dirname,
   jar: 'mcserver.jar',
 });
 
