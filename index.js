@@ -19,9 +19,9 @@ app.listen(process.env.PORT || 3007, (data) => {
 app.get('/', (req, res) => {
   java.run(['-Xmx1024M', '-Xms1024M', 'nogui']).then((data) => {
     console.log('success', data)
-    res.send(`hello, ${ip.address()} ${data}`)
+    res.send(`123hello, ${ip.address()} ${data}`)
   }).catch(err => {
-    res.send(`hello, ${ip.address()} ${err}`)
+    res.send(`123hello, ${ip.address()} ${err}`)
   })
 })
 
